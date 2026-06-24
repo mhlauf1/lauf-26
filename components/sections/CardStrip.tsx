@@ -8,27 +8,29 @@ import { projects, bySlug, type Project } from "@/lib/work";
  * project's accent. A couple of color cards tilt slightly for that
  * sticker-on-the-page feel.
  *
- * Content is sourced from lib/work.ts. The default arrangement mirrors the
- * Paper design (Embark image, Cadence cream, Body Biz pink, Playbook image,
- * STOC green); pass `cards` to override.
+ * Content is sourced from lib/work.ts. Each card leads with the *scope* we
+ * delivered (capability-led, not industry-led — the industry pills already sit
+ * right above), keeps the witty serif tagline, and credits the client small.
+ * The default arrangement mirrors the Paper design (Embark image, Cadence cream,
+ * Body Biz pink, Playbook image, STOC green); pass `cards` to override.
  */
 
 type CardConfig = {
   slug: string;
   /** force solid tinted block even when the project has a cover image */
   solid?: boolean;
-  /** override eyebrow label (defaults to the project's vertical, uppercased) */
-  eyebrow?: string;
+  /** capability/scope eyebrow — what we did (defaults to the project's vertical) */
+  scope?: string;
   /** slight sticker tilt in degrees */
   tilt?: number;
 };
 
 const DEFAULT_CARDS: CardConfig[] = [
-  { slug: "embark", eyebrow: "FLAGSHIP — PET SERVICES" },
-  { slug: "cadence", solid: true },
-  { slug: "the-body-biz", solid: true, tilt: -1.5 },
-  { slug: "playbook" },
-  { slug: "stoc-advisory", solid: true, tilt: 1.5 },
+  { slug: "embark", scope: "Brand system · 6 brands" },
+  { slug: "cadence", solid: true, scope: "Brand + site" },
+  { slug: "the-body-biz", solid: true, tilt: -1.5, scope: "Replatform" },
+  { slug: "playbook", scope: "Product build" },
+  { slug: "stoc-advisory", solid: true, tilt: 1.5, scope: "Design + build" },
 ];
 
 /** cream card reads as "light" — dark ink text instead of white */
@@ -45,7 +47,7 @@ function isLight(hex: string) {
 
 function Card({ project, config }: { project: Project; config: CardConfig }) {
   const showImage = !config.solid && Boolean(project.image);
-  const eyebrow = config.eyebrow ?? project.vertical.toUpperCase();
+  const eyebrow = config.scope ?? project.vertical;
   const bg = config.slug === "cadence" ? CREAM : project.accent;
   const light = !showImage && isLight(bg);
 
@@ -110,6 +112,7 @@ function Card({ project, config }: { project: Project; config: CardConfig }) {
           style={{ color: nameColor }}
         >
           {project.name}
+          <span className="font-normal opacity-70"> · {project.vertical}</span>
         </span>
       </div>
     </article>
