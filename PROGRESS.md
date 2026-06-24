@@ -94,28 +94,45 @@ Run: `npm install` → `npm run dev` → `localhost:3000/kit`.
 
 - ✅ Full design direction locked (above).
 - ✅ Paper: homepage v2, 15-format showcase kit, favicon sheet.
-- ✅ Next.js scaffold: tokens, fonts, Lenis, image config, git init.
-- ✅ First slice ported to code (proves the 3 conventions): **Hero** (static),
-  **BeforeAfter** (JS interaction), **LogoMarquee** (CSS animation) — all live in `/kit`.
+- ✅ Next.js scaffold: tokens, fonts, Lenis, image config. **Git committed** —
+  clean baseline + per-feature commits (no longer "uncommitted").
+- ✅ **Full Homepage v2 built & composed** in `app/page.tsx` (Paper artboord order):
+  Hero → CardStrip → WorkGrid → EmbarkBand (full-bleed) → TabbedViewer →
+  PhotoCarousel → Services → StudioBand (full-bleed cream) → TrustedBy → CTA
+  (full-bleed) → Footer, with StarDividers. New section components live in
+  `components/sections/`. Builds clean; verified on-brand via screenshots.
+- ✅ **All 15 showcase formats** ported to `components/showcase/` and surfaced in
+  `/kit` (F01–F15): BeforeAfter, HoverIndex, Bento, LogoMarquee, Showreel,
+  StickySplit, StackCards, DeviceMockups, PolaroidScatter, QuoteSpotlight,
+  SplitFlap, PinnedGallery, NowNext, CoverFlow, MagneticTiles. Plus TabbedViewer.
+  Each sources from `work.ts`; exact values pulled from Paper computed styles;
+  scroll/3D/pointer formats use GSAP or CSS-sticky and are reduced-motion safe.
+- ✅ Primitives: `StarMark`, `StarDivider`, `SectionLabel`.
+
+### Known follow-ups / polish
+- Several kit formats render their own internal numbered eyebrow (e.g.
+  "02 · Index — Hover to reveal") which duplicates the `/kit` KitItem label —
+  cosmetic, kit-only; trim the default label props when wiring into the real page.
+- Scroll-driven formats (StickySplit, StackCards, PinnedGallery) + 3D (CoverFlow)
+  could only be static-screenshot-checked; **eyeball them live in a browser** to
+  tune motion feel. Showreel uses a poster-image placeholder (no video assets yet).
+- Studio portraits (Mike & Clare) are placeholder blocks — no real photos yet.
 
 ---
 
 ## 6. To come (rough order)
 
-1. **Port the rest of the showcase formats** to `components/showcase/`, each into `/kit`:
-   tabbed viewer, bento, hover-index, stacked scroll-cards, device mockups, polaroid
-   scatter, quote spotlight, split-flap, pinned horizontal scroll, now/next, cover-flow,
-   magnetic tiles, showreel, sticky split-scroll. (Wire real interactions: tabs, GSAP
-   ScrollTrigger for stacked/pinned, flip for split-flap, pointer-lean for magnetic.)
-2. **Port the homepage sections** (`components/sections/`): EmbarkBand, WorkGrid, Services,
-   StudioBand, TrustedBy, CTA, Footer, StarDivider.
-3. **Compose `app/page.tsx`** from the flow the user picks after browsing `/kit`.
-4. **Motion layer polish** — one orchestrated hero moment, reveal-on-scroll, all
+1. **Live review of `/kit`** — walk every format in a real browser (esp. the
+   scroll/3D ones), pick which formats swap into the homepage, trim duplicate
+   eyebrow labels when promoting a format to a real section.
+2. **Motion layer polish** — one orchestrated hero moment, reveal-on-scroll, all
    `prefers-reduced-motion` safe.
-5. **CMS** — move `lib/work.ts` to **Sanity** (project type, images, case studies).
-6. **Inner pages** — `/work` index, `/work/[slug]` case template, `/about`, `/contact`.
-7. **Logo/favicon** export from Paper → `app/icon`, real assets into `/public`.
-8. **Responsive + a11y + Lighthouse**, then **deploy** (Vercel).
+3. **Real assets** — replace Bloom placeholder imagery + Showreel poster with real
+   client screenshots/video; add Mike & Clare portraits to StudioBand.
+4. **CMS** — move `lib/work.ts` to **Sanity** (project type, images, case studies).
+5. **Inner pages** — `/work` index, `/work/[slug]` case template, `/about`, `/contact`.
+6. **Logo/favicon** export from Paper → `app/icon`, real assets into `/public`.
+7. **Responsive + a11y + Lighthouse**, then **deploy** (Vercel).
 
 ---
 
