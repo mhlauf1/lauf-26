@@ -3,6 +3,7 @@ import { StarMark } from "@/components/primitives/StarMark";
 import { Hero } from "@/components/sections/Hero";
 import { BeforeAfter } from "@/components/showcase/BeforeAfter";
 import { LogoMarquee } from "@/components/showcase/LogoMarquee";
+import { TabbedViewer } from "@/components/showcase/TabbedViewer";
 import { bySlug } from "@/lib/work";
 
 export const metadata = { title: "Lauf — Component Kit" };
@@ -38,6 +39,14 @@ export default function KitPage() {
           afterSrc={playbook!.image!}
           afterAlt="Playbook rebuild by Lauf"
         />
+      </KitItem>
+
+      <KitItem
+        id="02"
+        title="Tabbed Case Viewer"
+        note="click a tab or arrow-key the tablist"
+      >
+        <TabbedViewer />
       </KitItem>
 
       <KitItem id="04" title="Logo Marquee" note="hover to pause">
