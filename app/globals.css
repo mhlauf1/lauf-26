@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+/* ── Lauf design tokens ─────────────────────────────────────────────
+   Locked from Paper: light Newsreader, ink-on-warm-white, rust star.
+   Color lives in the work, never the chrome.                          */
+@theme {
+  --color-paper: #fdfcfa;
+  --color-ink: #141414;
+  --color-rust: #b0431f;
+  --color-cream: #f1eadc;
+  --color-board: #16140f;
+  --color-muted: #6b6459;
+  --color-faint: #9a9388;
+  --color-line: #e7e1d6;
+
+  /* font tokens map to the next/font CSS variables set in layout.tsx */
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+  --font-italic: var(--font-fraunces), Georgia, serif;
+  --font-mono: var(--font-plex), ui-monospace, monospace;
+
+  --animate-marquee: marquee 32s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}

@@ -1,0 +1,118 @@
+/**
+ * Single source of truth for Lauf's work.
+ * Every showcase format reads from here, so swapping in a CMS (Sanity)
+ * later means changing this file only — components don't care.
+ */
+
+export type Project = {
+  slug: string;
+  name: string;
+  vertical: string;
+  /** dot color for tag-pills / category chips (color lives in the work) */
+  accent: string;
+  /** witty serif one-liner used on sticker cards & covers */
+  tagline: string;
+  /** plain-language descriptor */
+  blurb: string;
+  services: string;
+  image?: string;
+  year?: string;
+  status?: "live" | "shipped";
+};
+
+const IMG = "https://www.trybloom.ai/img";
+
+export const projects: Project[] = [
+  {
+    slug: "embark",
+    name: "Embark",
+    vertical: "Pet Services",
+    accent: "#e0742e",
+    tagline: "Six brands. One codebase.",
+    blurb: "A pet-services roll-up shipping every acquisition on one shared platform.",
+    services: "Design · Build · Multi-brand system",
+    image: `${IMG}/ae5811fb-fb81-4243-a1af-bd98f4162226`,
+    year: "2025",
+    status: "live",
+  },
+  {
+    slug: "cadence",
+    name: "Cadence Private Capital",
+    vertical: "Private Equity",
+    accent: "#2f6bd6",
+    tagline: "Confidence, compounded.",
+    blurb: "An institutional presence for the firm behind Embark.",
+    services: "Design · Next.js",
+    year: "2025",
+    status: "live",
+  },
+  {
+    slug: "the-body-biz",
+    name: "The Body Biz",
+    vertical: "Wellness",
+    accent: "#c7417b",
+    tagline: "Wix out. 3× faster checkout.",
+    blurb: "Wix & Authorize.net replaced with Next.js + Stripe.",
+    services: "Brand · Build",
+    image: `${IMG}/4d28523f-838e-4df9-bdc5-7160f06f28c4`,
+    year: "2025",
+    status: "shipped",
+  },
+  {
+    slug: "playbook",
+    name: "Playbook",
+    vertical: "PropTech · SaaS",
+    accent: "#2f6bd6",
+    tagline: "The tenant app people open.",
+    blurb: "Web + mobile front end for a tenant-experience platform.",
+    services: "Product · Build",
+    image: `${IMG}/68e6cce9-eefd-4316-96d2-4d67e9beb031`,
+    year: "2025",
+    status: "shipped",
+  },
+  {
+    slug: "brady-digital",
+    name: "Brady Digital",
+    vertical: "E-commerce",
+    accent: "#e0742e",
+    tagline: "Amazon, into a growth engine.",
+    blurb: "Identity & site for an Amazon marketplace consultancy.",
+    services: "Design · Art dir",
+    year: "2024",
+    status: "shipped",
+  },
+  {
+    slug: "stoc-advisory",
+    name: "STOC Advisory",
+    vertical: "Advisory",
+    accent: "#2f7d55",
+    tagline: "Advice that looks the part.",
+    blurb: "An advisory presence built to scale across future events.",
+    services: "Design · Build",
+    year: "2024",
+    status: "live",
+  },
+  {
+    slug: "striano-electric",
+    name: "Striano Electric",
+    vertical: "Trades",
+    accent: "#d6a12f",
+    tagline: "Trade work, taken seriously online.",
+    blurb: "A sharp web presence for a New York electrical contractor.",
+    services: "Design · Build",
+    year: "2024",
+    status: "live",
+  },
+];
+
+/** Verticals for the hero tag-pills — proof of range, not a gate. */
+export const verticals = [
+  { label: "Private Equity", color: "#2f6bd6" },
+  { label: "Pet Services", color: "#e0742e" },
+  { label: "Wellness", color: "#c7417b" },
+  { label: "SaaS", color: "#2f7d55" },
+  { label: "Advisory", color: "#8b5cc7" },
+  { label: "Trades", color: "#d6a12f" },
+];
+
+export const bySlug = (slug: string) => projects.find((p) => p.slug === slug);
