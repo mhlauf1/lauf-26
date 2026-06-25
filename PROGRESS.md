@@ -64,27 +64,31 @@ Body Biz editorial). URLs are `https://www.trybloom.ai/img/<id>` — see `lib/wo
 ## 4. The codebase (this repo)
 
 **Next.js 15 App Router + TypeScript + Tailwind v4.** Builds clean; dev on `:3000`.
-Git initialized, **not yet committed**.
+Git committed (clean baseline + per-feature commits).
 
 ```
 app/
   layout.tsx        next/font (Newsreader 300, Schibsted, Fraunces, Plex) → CSS vars; Lenis
-  globals.css       Tailwind v4 @theme tokens (colors/fonts/marquee). CSS-first, no config.
-  page.tsx          home — renders <Hero/> + link to /kit (real composition comes later)
-  kit/page.tsx      THE PLAYGROUND — every component rendered + labeled
+  globals.css       Tailwind v4 @theme tokens (colors/fonts; --animate-marquee/reel/fade-in)
+  page.tsx          home — the composed Homepage v2 (see §5 for section order)
+  kit/page.tsx      THE PLAYGROUND — every section + showcase format, rendered + labeled
 components/
-  primitives/       StarMark, SectionLabel
-  sections/         Hero
-  showcase/         BeforeAfter (JS drag), LogoMarquee (CSS)
-  kit/KitItem.tsx   labeled slot wrapper for /kit
+  primitives/       StarMark, StarDivider, SectionLabel
+  sections/         Hero, WorkReel, CardStrip, WorkGrid, EmbarkBand, PhotoCarousel,
+                    Services, StudioBand, TrustedBy, CTA, Footer
+  showcase/         15 formats (F01–F15) + TabbedViewer — see §5
+  kit/KitItem.tsx   labeled slot wrapper for /kit (supports `bleed`)
   SmoothScroll.tsx  Lenis provider (reduced-motion aware)
-lib/work.ts         single typed data source (projects, verticals) — Sanity-swappable
+lib/work.ts         single typed data source: projects, verticals, reel — Sanity-swappable
 next.config.mjs     allows images from www.trybloom.ai
 ```
 
 **Conventions:** Tailwind utilities from the `@theme` tokens (`bg-paper`, `text-ink`,
-`text-rust`, `font-serif`, `font-light`, `animate-marquee`…). Use `<StarMark/>` — never
-hardcode the asterisk. Every format reads from `lib/work.ts`.
+`text-rust`, `font-serif`, `font-light`, `animate-marquee`/`animate-reel`…). Use
+`<StarMark/>` — never hardcode the asterisk. Every section/format reads from `lib/work.ts`.
+Motion is `motion-safe:`-gated (prefers-reduced-motion safe). Full-bleed bands (EmbarkBand,
+StudioBand, TrustedBy, CTA, Footer, WorkReel) own their padding; others sit in a `px-10`
+wrapper.
 
 Run: `npm install` → `npm run dev` → `localhost:3000/kit`.
 
@@ -96,11 +100,17 @@ Run: `npm install` → `npm run dev` → `localhost:3000/kit`.
 - ✅ Paper: homepage v2, 15-format showcase kit, favicon sheet.
 - ✅ Next.js scaffold: tokens, fonts, Lenis, image config. **Git committed** —
   clean baseline + per-feature commits (no longer "uncommitted").
-- ✅ **Full Homepage v2 built & composed** in `app/page.tsx` (Paper artboord order):
-  Hero → CardStrip → WorkGrid → EmbarkBand (full-bleed) → TabbedViewer →
+- ✅ **Full Homepage v2 built & composed** in `app/page.tsx` (Paper artboard order):
+  Hero → **WorkReel** → WorkGrid → EmbarkBand (full-bleed) → TabbedViewer →
   PhotoCarousel → Services → StudioBand (full-bleed cream) → TrustedBy → CTA
   (full-bleed) → Footer, with StarDividers. New section components live in
   `components/sections/`. Builds clean; verified on-brand via screenshots.
+- ✅ **WorkReel** (under-hero) = a Bajgart-style infinite right-to-left loop of real
+  work imagery — photos only, no chrome — pulled from the Bloom brand libraries into
+  a curated `reel` in `work.ts` (Embark OOH/lifestyle, Body Biz B&W editorial + posters,
+  Playbook UI mockups + interiors). Replaced the original **CardStrip** (5 tilted
+  "sticker" cards), which was first reframed capability-led, then swapped out; CardStrip
+  is retained in the tree + `/kit` but no longer on the homepage.
 - ✅ **All 15 showcase formats** ported to `components/showcase/` and surfaced in
   `/kit` (F01–F15): BeforeAfter, HoverIndex, Bento, LogoMarquee, Showreel,
   StickySplit, StackCards, DeviceMockups, PolaroidScatter, QuoteSpotlight,
