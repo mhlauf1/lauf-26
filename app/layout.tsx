@@ -1,27 +1,32 @@
 import type { Metadata } from "next";
-import {
-  Newsreader,
-  Schibsted_Grotesk,
-  Fraunces,
-  IBM_Plex_Mono,
-} from "next/font/google";
+import { Fraunces, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import SmoothScroll from "@/components/SmoothScroll";
+import { SiteNav } from "@/components/sections/SiteNav";
 import "./globals.css";
 
-// Display serif — used Light (300) everywhere per the locked direction.
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-newsreader",
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
+// Display sans — General Sans (Fontshare, ITF Free Font License, self-hosted).
+// The hero headline's sans bookend lines — set Regular (400), not bold.
+const generalSans = localFont({
+  variable: "--font-general",
   display: "swap",
+  src: [
+    { path: "./fonts/GeneralSans-Light.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/GeneralSans-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/GeneralSans-Medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/GeneralSans-Semibold.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/GeneralSans-Bold.woff2", weight: "700", style: "normal" },
+  ],
 });
 
-// Body / UI sans.
-const schibsted = Schibsted_Grotesk({
+// Display serif — the site's serif voice. Swap this one loader to audition a
+// different Google serif; the --font-display-serif variable stays the same so
+// nothing else needs to change.
+const displaySerif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-schibsted",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-display-serif",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -56,10 +61,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${schibsted.variable} ${fraunces.variable} ${plex.variable}`}
+      className={`${fraunces.variable} ${plex.variable} ${generalSans.variable} ${displaySerif.variable}`}
     >
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <SiteNav />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

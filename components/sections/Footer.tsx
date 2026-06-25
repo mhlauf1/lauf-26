@@ -9,16 +9,16 @@ const COLUMNS: FooterColumn[] = [
   {
     heading: "Explore",
     links: [
-      { label: "Work", href: "#" },
-      { label: "Studio", href: "#" },
-      { label: "Pricing", href: "#" },
+      { label: "Work", href: "/work" },
+      { label: "Studio", href: "/about" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
     heading: "Connect",
     links: [
       { label: "michael@lauf.co", href: "mailto:michael@lauf.co" },
-      { label: "Book a call", href: "#" },
+      { label: "Book a call", href: "/contact" },
       { label: "Instagram", href: "#" },
     ],
   },

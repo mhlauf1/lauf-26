@@ -17,11 +17,16 @@ Flow: **design in Paper → port to this Next.js repo as a component kit → com
 
 - **Register:** warm-studio / editorial, **mirroring bajgartoffice.com** (refs in
   `context/inspiration/`): classic serif display with the work carrying the color.
-- **Type:**
-  - Display = **Newsreader, weight 300 (Light) everywhere**.
-  - Body/UI = **Schibsted Grotesk**.
+- **Type (two faces — the hero pairing, sitewide):**
+  - Display serif = **Source Serif 4** (Google; weights 300/400/500/600 + italic).
+    Loads under `--font-display-serif` (the `displaySerif` loader in `layout.tsx`);
+    `--font-serif` + `--font-garamond` alias it. **Swap-friendly:** audition another
+    Google serif by editing that one loader (+ import + weights). History: Cormorant →
+    Playfair Display → **Source Serif 4 (current)**.
+  - Body/UI sans = **General Sans** (self-hosted woff2, 300–700); it's the body default.
   - Accent = **Fraunces** (the star `*` + rare italic).
   - Mono = **IBM Plex Mono** (split-flap board).
+  - Removed (no longer loaded): Newsreader, Schibsted Grotesk.
 - **Color:** ink `#141414` on warm white `#FDFCFA`. **Color lives only in the work**
   (bright cards, real photos). Eyebrows/labels = muted gray `#9A9388`.
 - **Star mark:** the **Fraunces asterisk `*`, weight 500, rust `#B0431F`** — the one
@@ -29,7 +34,8 @@ Flow: **design in Paper → port to this Next.js repo as a component kit → com
   favicon. (NOT the unicode ✳.)
 - **Copy:** craft-led, **not multi-brand-gated**. Hero (current): "We design and build *
   websites that thrive." Multi-brand (Embark = 6 brands) is shown as proof of range, not
-  a requirement. Vertical tag-pills (PE, Pet, Wellness, SaaS, Advisory, Trades) = breadth.
+  a requirement. Vertical tag-pills (8, `lib/work.ts`, brand-matched dot colors): Private Equity, Pet
+  Services, Wellness, SaaS, Advisory, Trades, Recruiting, Agencies = breadth.
 - Rejected earlier: loud industrial v2 (chrome yellow/Archivo); the muted-warm comps
   (Bookish/Candlelit/Botanical); pervasive orange+italic ("too Claude").
 
@@ -68,7 +74,7 @@ Git committed (clean baseline + per-feature commits).
 
 ```
 app/
-  layout.tsx        next/font (Newsreader 300, Schibsted, Fraunces, Plex) → CSS vars; Lenis
+  layout.tsx        next/font (Source Serif 4, General Sans, Fraunces, Plex) → CSS vars; Lenis
   globals.css       Tailwind v4 @theme tokens (colors/fonts; --animate-marquee/reel/fade-in)
   page.tsx          home — the composed Homepage v2 (see §5 for section order)
   kit/page.tsx      THE PLAYGROUND — every section + showcase format, rendered + labeled
@@ -117,9 +123,34 @@ Run: `npm install` → `npm run dev` → `localhost:3000/kit`.
   SplitFlap, PinnedGallery, NowNext, CoverFlow, MagneticTiles. Plus TabbedViewer.
   Each sources from `work.ts`; exact values pulled from Paper computed styles;
   scroll/3D/pointer formats use GSAP or CSS-sticky and are reduced-motion safe.
-- ✅ Primitives: `StarMark`, `StarDivider`, `SectionLabel`.
+- ✅ Primitives: `StarMark`, `StarDivider`, `SectionLabel`, **`PageHeader`** (sub-page opener).
+- ✅ **Sub-pages built** (App Router):
+  - **`/work`** — full index of all 7 projects. Reuses a now-parameterized
+    `WorkGrid` (new props `eyebrow`/`heading`/`showAllLink`/`flush`; `WorkCard`
+    is exported) under a `PageHeader`, closing with a `CTA` + `Footer`.
+  - **`/work/[slug]`** — case-study template. `generateStaticParams` +
+    `generateMetadata`; all 7 prerender (SSG). Header (vertical/year + name +
+    italic intro + meta row) → full-bleed cover → problem/approach/outcome
+    narrative → serif stat row → 2-col gallery → next-project link → CTA → Footer.
+    Degrades gracefully when `caseStudy` fields are absent.
+  - **`/about`** — studio page: `PageHeader` → `StudioBand` → 3 principles →
+    `Services` → `TrustedBy` → `CTA` → `Footer`.
+  - **`/contact`** — details aside + working `ContactForm` (client component;
+    composes a `mailto:` on submit — no backend yet, swap for a server action
+    later). Project-type pill selector, accessible labels/focus rings.
+- ✅ **`SiteNav` extracted** from `Hero.tsx` into `components/sections/SiteNav.tsx`
+  (uses `next/link`, `active` prop underlines the current section). Hero now renders
+  it. **Footer + nav links wired** to real routes (`/work`, `/about`, `/contact`).
+- ✅ **`lib/work.ts` extended** with an optional `caseStudy` block per project
+  (`intro`, `problem`, `approach`, `outcome`, `stats`, `gallery`, `stack`, `liveUrl`).
+  Embark/Body Biz/Playbook fully populated with galleries (Bloom imagery); the
+  image-less projects (Cadence, Brady, STOC, Striano) have prose-only case content.
 
 ### Known follow-ups / polish
+- Contact form has **no backend** — it opens the visitor's mail client via `mailto:`.
+  Wire a server action / form endpoint (Resend, Formspree, etc.) when ready.
+- Sub-page case galleries reuse Bloom placeholder imagery — swap for real screenshots.
+- `/about` principles + `/work` case copy are first-draft prose — refine with the user.
 - Several kit formats render their own internal numbered eyebrow (e.g.
   "02 · Index — Hover to reveal") which duplicates the `/kit` KitItem label —
   cosmetic, kit-only; trim the default label props when wiring into the real page.
@@ -140,7 +171,9 @@ Run: `npm install` → `npm run dev` → `localhost:3000/kit`.
 3. **Real assets** — replace Bloom placeholder imagery + Showreel poster with real
    client screenshots/video; add Mike & Clare portraits to StudioBand.
 4. **CMS** — move `lib/work.ts` to **Sanity** (project type, images, case studies).
-5. **Inner pages** — `/work` index, `/work/[slug]` case template, `/about`, `/contact`.
+   The `caseStudy` shape is already CMS-ready — components read it, never inline it.
+5. ✅ ~~**Inner pages** — `/work`, `/work/[slug]`, `/about`, `/contact`~~ — built
+   (see §5). Remaining: wire the contact form to a real endpoint; refine case copy.
 6. **Logo/favicon** export from Paper → `app/icon`, real assets into `/public`.
 7. **Responsive + a11y + Lighthouse**, then **deploy** (Vercel).
 

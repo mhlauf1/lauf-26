@@ -1,6 +1,9 @@
 import { KitItem } from "@/components/kit/KitItem";
 import { StarMark } from "@/components/primitives/StarMark";
 import { Hero } from "@/components/sections/Hero";
+import { HeroStudyA } from "@/components/sections/hero-studies/HeroStudyA";
+import { HeroStudyB } from "@/components/sections/hero-studies/HeroStudyB";
+import { HeroStudyC } from "@/components/sections/hero-studies/HeroStudyC";
 import { WorkReel } from "@/components/sections/WorkReel";
 
 // Showcase formats — the "New Formats" kit (F01–F15)
@@ -45,6 +48,18 @@ export default function KitPage() {
 
       <KitItem id="REF" title="Hero" note="the homepage opener" bleed>
         <Hero />
+      </KitItem>
+
+      <KitItem id="TYPE" title="Hero · A — Editorial control" note="all-Newsreader, single italic emphasis word (Bajgart-faithful)" bleed>
+        <HeroStudyA />
+      </KitItem>
+
+      <KitItem id="TYPE" title="Hero · B — Mixed bottom line" note="Schibsted sans + serif roman + serif italic on one line — the move" bleed>
+        <HeroStudyB />
+      </KitItem>
+
+      <KitItem id="TYPE" title="Hero · C — Tight mixed (brand copy)" note="same mix, tighter rhythm, sans leads the line" bleed>
+        <HeroStudyC />
       </KitItem>
 
       <KitItem id="REF" title="Work Reel" note="infinite photo loop — hover to pause" bleed>

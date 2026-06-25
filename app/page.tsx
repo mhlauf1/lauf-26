@@ -16,12 +16,8 @@ export default function Home() {
     <main className="min-h-screen">
       <Hero />
 
-      <div className="mt-14">
+      <div className="mt-24">
         <WorkReel />
-      </div>
-
-      <div className="my-24">
-        <StarDivider />
       </div>
 
       <section className="px-10">
@@ -32,11 +28,7 @@ export default function Home() {
         <EmbarkBand />
       </div>
 
-      <div className="my-24">
-        <StarDivider />
-      </div>
-
-      <section className="px-10">
+      <section className="px-10 mt-24">
         <TabbedViewer />
       </section>
 

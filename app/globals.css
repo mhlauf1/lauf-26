@@ -13,9 +13,13 @@
   --color-faint: #9a9388;
   --color-line: #e7e1d6;
 
-  /* font tokens map to the next/font CSS variables set in layout.tsx */
-  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+  /* font tokens map to the next/font CSS variables set in layout.tsx.
+     The site runs on the two hero faces: General Sans + Cormorant Garamond.
+     --font-serif / --font-sans alias them so existing utilities inherit. */
+  --font-serif: var(--font-display-serif), Georgia, "Times New Roman", serif;
+  --font-garamond: var(--font-display-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-general), system-ui, sans-serif;
+  --font-general: var(--font-general), system-ui, sans-serif;
   --font-italic: var(--font-fraunces), Georgia, serif;
   --font-mono: var(--font-plex), ui-monospace, monospace;
 
