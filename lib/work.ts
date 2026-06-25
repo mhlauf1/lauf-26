@@ -116,3 +116,24 @@ export const verticals = [
 ];
 
 export const bySlug = (slug: string) => projects.find((p) => p.slug === slug);
+
+/**
+ * Studio reel — a curated set of real, text-free brand photos for the
+ * under-hero infinite loop. Just good imagery (no captions). Mixed aspect
+ * ratios drive varied card widths; intrinsic w/h keep them un-cropped.
+ * Sourced from the Bloom brand libraries (Embark, The Body Biz, Playbook).
+ */
+export type ReelShot = { src: string; alt: string; w: number; h: number };
+
+export const reel: ReelShot[] = [
+  { src: `${IMG}/178e318b-4d69-4499-8931-a1cc028180a9`, alt: "Embark — a groomer washing a dog in the salon", w: 1300, h: 867 },
+  { src: `${IMG}/4d28523f-838e-4df9-bdc5-7160f06f28c4`, alt: "The Body Biz — chalked hands on a barbell", w: 1632, h: 2048 },
+  { src: `${IMG}/317c7a9c-c185-47af-a783-3bc5e3af407d`, alt: "Playbook — a modern multi-level office lobby", w: 1632, h: 2048 },
+  { src: `${IMG}/c4cd2535-2642-4342-beba-a7bc10644b86`, alt: "Embark — trimming a cat's claws at home", w: 1000, h: 667 },
+  { src: `${IMG}/04e692fb-14b7-4ba8-9023-a5bab477648c`, alt: "Playbook — a rooftop yoga class above the city", w: 1632, h: 2048 },
+  { src: `${IMG}/88b057a2-0fdb-4c20-b581-caaa58d602a8`, alt: "The Body Biz — a calm editorial portrait in natural light", w: 1632, h: 2048 },
+  { src: `${IMG}/ae5811fb-fb81-4243-a1af-bd98f4162226`, alt: "Embark — bathing a corgi", w: 1000, h: 1000 },
+  { src: `${IMG}/0dd4210c-d736-4d23-8e13-a1ee6c398cd4`, alt: "Playbook — a plush co-working lounge", w: 1632, h: 2048 },
+  { src: `${IMG}/8e45e64a-70a6-44b4-88cc-6d95a9d3e01b`, alt: "Playbook — people working in a modern lounge", w: 1632, h: 2048 },
+  { src: `${IMG}/12369673-5544-4690-aca0-39be08dbcfb4`, alt: "Playbook — an exposed-brick multi-level interior", w: 1346, h: 688 },
+];

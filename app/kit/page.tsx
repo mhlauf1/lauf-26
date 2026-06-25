@@ -1,6 +1,7 @@
 import { KitItem } from "@/components/kit/KitItem";
 import { StarMark } from "@/components/primitives/StarMark";
 import { Hero } from "@/components/sections/Hero";
+import { WorkReel } from "@/components/sections/WorkReel";
 
 // Showcase formats — the "New Formats" kit (F01–F15)
 import { BeforeAfter } from "@/components/showcase/BeforeAfter";
@@ -44,6 +45,10 @@ export default function KitPage() {
 
       <KitItem id="REF" title="Hero" note="the homepage opener" bleed>
         <Hero />
+      </KitItem>
+
+      <KitItem id="REF" title="Work Reel" note="infinite photo loop — hover to pause" bleed>
+        <WorkReel />
       </KitItem>
 
       <KitItem id="F01" title="Before / After Slider" note="drag or arrow-key the handle">

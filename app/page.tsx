@@ -1,5 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
-import { CardStrip } from "@/components/sections/CardStrip";
+import { WorkReel } from "@/components/sections/WorkReel";
 import { WorkGrid } from "@/components/sections/WorkGrid";
 import { EmbarkBand } from "@/components/sections/EmbarkBand";
 import { TabbedViewer } from "@/components/showcase/TabbedViewer";
@@ -16,9 +16,9 @@ export default function Home() {
     <main className="min-h-screen">
       <Hero />
 
-      <section className="mt-16 px-10">
-        <CardStrip />
-      </section>
+      <div className="mt-14">
+        <WorkReel />
+      </div>
 
       <div className="my-24">
         <StarDivider />
