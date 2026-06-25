@@ -126,14 +126,17 @@ export const bySlug = (slug: string) => projects.find((p) => p.slug === slug);
 export type ReelShot = { src: string; alt: string; w: number; h: number };
 
 export const reel: ReelShot[] = [
-  { src: `${IMG}/178e318b-4d69-4499-8931-a1cc028180a9`, alt: "Embark — a groomer washing a dog in the salon", w: 1300, h: 867 },
+  { src: `${IMG}/d3c5acd8-62ac-442c-85de-6f091489a647`, alt: "Embark — out-of-home billboard campaign", w: 2048, h: 1152 },
   { src: `${IMG}/4d28523f-838e-4df9-bdc5-7160f06f28c4`, alt: "The Body Biz — chalked hands on a barbell", w: 1632, h: 2048 },
+  { src: `${IMG}/fa7fe8ea-ff54-45a1-8c36-b9284432744c`, alt: "Playbook — the tenant app in context", w: 1152, h: 2048 },
+  { src: `${IMG}/178e318b-4d69-4499-8931-a1cc028180a9`, alt: "Embark — a groomer washing a dog in the salon", w: 1300, h: 867 },
+  { src: `${IMG}/9dd48b5e-760a-4648-8686-4fa0b9a55853`, alt: "The Body Biz — services typographic poster", w: 1360, h: 2048 },
   { src: `${IMG}/317c7a9c-c185-47af-a783-3bc5e3af407d`, alt: "Playbook — a modern multi-level office lobby", w: 1632, h: 2048 },
   { src: `${IMG}/c4cd2535-2642-4342-beba-a7bc10644b86`, alt: "Embark — trimming a cat's claws at home", w: 1000, h: 667 },
-  { src: `${IMG}/04e692fb-14b7-4ba8-9023-a5bab477648c`, alt: "Playbook — a rooftop yoga class above the city", w: 1632, h: 2048 },
   { src: `${IMG}/88b057a2-0fdb-4c20-b581-caaa58d602a8`, alt: "The Body Biz — a calm editorial portrait in natural light", w: 1632, h: 2048 },
+  { src: `${IMG}/04e692fb-14b7-4ba8-9023-a5bab477648c`, alt: "Playbook — a rooftop yoga class above the city", w: 1632, h: 2048 },
   { src: `${IMG}/ae5811fb-fb81-4243-a1af-bd98f4162226`, alt: "Embark — bathing a corgi", w: 1000, h: 1000 },
-  { src: `${IMG}/0dd4210c-d736-4d23-8e13-a1ee6c398cd4`, alt: "Playbook — a plush co-working lounge", w: 1632, h: 2048 },
-  { src: `${IMG}/8e45e64a-70a6-44b4-88cc-6d95a9d3e01b`, alt: "Playbook — people working in a modern lounge", w: 1632, h: 2048 },
+  { src: `${IMG}/79d86a1b-a96d-444c-a0ed-c59ae4d537fd`, alt: "The Body Biz — brand stationery system", w: 2048, h: 1360 },
   { src: `${IMG}/12369673-5544-4690-aca0-39be08dbcfb4`, alt: "Playbook — an exposed-brick multi-level interior", w: 1346, h: 688 },
+  { src: `${IMG}/0dd4210c-d736-4d23-8e13-a1ee6c398cd4`, alt: "Playbook — a plush co-working lounge", w: 1632, h: 2048 },
 ];

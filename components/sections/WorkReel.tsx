@@ -11,7 +11,7 @@ import { reel, type ReelShot } from "@/lib/work";
  * for a natural editorial rhythm.
  */
 
-const CARD_H = 360; // px — shared height; width derives from each photo's ratio
+const CARD_H = 460; // px — shared height; width derives from each photo's ratio
 
 function Track({
   shots,
