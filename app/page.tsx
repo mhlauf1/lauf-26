@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/Hero";
 import { WorkReel } from "@/components/sections/WorkReel";
+import { BrandReady } from "@/components/sections/BrandReady";
 import { WorkGrid } from "@/components/sections/WorkGrid";
 import { EmbarkBand } from "@/components/sections/EmbarkBand";
 import { TabbedViewer } from "@/components/showcase/TabbedViewer";
@@ -20,35 +21,38 @@ export default function Home() {
         <WorkReel />
       </div>
 
-      <section className="px-10">
+      <section className="px-10 mt-12">
         <WorkGrid />
       </section>
 
+      <section className="px-10 mt-28">
+        <BrandReady />
+      </section>
       <div className="mt-28">
         <EmbarkBand />
       </div>
 
-      <section className="px-10 mt-24">
+      {/* <section className="px-10 mt-24">
         <TabbedViewer />
-      </section>
+      </section> */}
 
-      <div className="my-24">
-        <StarDivider />
-      </div>
-
-      <section className="px-10">
+      {/* <section className="px-10">
         <PhotoCarousel />
-      </section>
+      </section> */}
 
-      <section className="px-10">
+      {/* <section className="px-10">
         <Services />
-      </section>
+      </section> */}
 
-      <div className="mt-28">
-        <StudioBand />
+      <div className="bg-board px-10 py-14">
+        <StarDivider tone="dark" />
       </div>
 
-      <TrustedBy />
+      {/* <div className="mt-20">
+        <StudioBand />
+      </div> */}
+
+      {/* <TrustedBy /> */}
 
       <CTA />
 

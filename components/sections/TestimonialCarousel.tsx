@@ -48,7 +48,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
           <figure
             key={t.name}
             aria-hidden={i !== active}
-            className={`col-start-1 row-start-1 flex max-w-[580px] flex-col gap-7 transition-opacity duration-500 ${
+            className={`col-start-1 row-start-1 flex  flex-col gap-7 transition-opacity duration-500 ${
               i === active ? "opacity-100" : "pointer-events-none opacity-0"
             } ${reduced ? "transition-none" : ""}`}
           >

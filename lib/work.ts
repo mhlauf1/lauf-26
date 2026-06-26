@@ -145,7 +145,7 @@ export const projects: Project[] = [
     tagline: "Wix out. 3× faster checkout.",
     blurb: "Wix & Authorize.net replaced with Next.js + Stripe.",
     services: "Brand · Build",
-    image: `${IMG}/4d28523f-838e-4df9-bdc5-7160f06f28c4`,
+    image: `/bb-mockup-2.jpg`,
     year: "2025",
     status: "shipped",
     caseStudy: {
@@ -164,9 +164,9 @@ export const projects: Project[] = [
       ],
       stack: ["Next.js", "Stripe", "Sanity CMS", "Tailwind"],
       gallery: [
+        "/bb-mockup-2.jpg",
         `${IMG}/9dd48b5e-760a-4648-8686-4fa0b9a55853`,
         `${IMG}/88b057a2-0fdb-4c20-b581-caaa58d602a8`,
-        `${IMG}/79d86a1b-a96d-444c-a0ed-c59ae4d537fd`,
       ],
     },
   },
@@ -290,20 +290,27 @@ export const bySlug = (slug: string) => projects.find((p) => p.slug === slug);
  * ratios drive varied card widths; intrinsic w/h keep them un-cropped.
  * Sourced from the Bloom brand libraries (Embark, The Body Biz, Playbook).
  */
-export type ReelShot = { src: string; alt: string; w: number; h: number };
+export type ReelShot = {
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+  /** when true, `src` is a muted autoplay/loop video (mp4) rather than an image */
+  video?: boolean;
+};
 
 export const reel: ReelShot[] = [
-  { src: `${IMG}/9f49b453-1aa5-4f77-a304-88735f1c2f86`, alt: "Embark — a freshly groomed dog in the salon", w: 1632, h: 2048 },
-  { src: `${IMG}/4d28523f-838e-4df9-bdc5-7160f06f28c4`, alt: "The Body Biz — chalked hands on a barbell", w: 1632, h: 2048 },
-  { src: `${IMG}/fa7fe8ea-ff54-45a1-8c36-b9284432744c`, alt: "Playbook — the tenant app in context", w: 1152, h: 2048 },
-  { src: `${IMG}/178e318b-4d69-4499-8931-a1cc028180a9`, alt: "Embark — a groomer washing a dog in the salon", w: 1300, h: 867 },
-  { src: `${IMG}/9dd48b5e-760a-4648-8686-4fa0b9a55853`, alt: "The Body Biz — services typographic poster", w: 1360, h: 2048 },
-  { src: `${IMG}/317c7a9c-c185-47af-a783-3bc5e3af407d`, alt: "Playbook — a modern multi-level office lobby", w: 1632, h: 2048 },
-  { src: `${IMG}/c4cd2535-2642-4342-beba-a7bc10644b86`, alt: "Embark — trimming a cat's claws at home", w: 1000, h: 667 },
-  { src: `${IMG}/88b057a2-0fdb-4c20-b581-caaa58d602a8`, alt: "The Body Biz — a calm editorial portrait in natural light", w: 1632, h: 2048 },
-  { src: `${IMG}/04e692fb-14b7-4ba8-9023-a5bab477648c`, alt: "Playbook — a rooftop yoga class above the city", w: 1632, h: 2048 },
-  { src: `${IMG}/ae5811fb-fb81-4243-a1af-bd98f4162226`, alt: "Embark — bathing a corgi", w: 1000, h: 1000 },
-  { src: `${IMG}/79d86a1b-a96d-444c-a0ed-c59ae4d537fd`, alt: "The Body Biz — brand stationery system", w: 2048, h: 1360 },
-  { src: `${IMG}/12369673-5544-4690-aca0-39be08dbcfb4`, alt: "Playbook — an exposed-brick multi-level interior", w: 1346, h: 688 },
-  { src: `${IMG}/0dd4210c-d736-4d23-8e13-a1ee6c398cd4`, alt: "Playbook — a plush co-working lounge", w: 1632, h: 2048 },
+  { src: "/bodybiz-mockup-2.png", alt: "The Body Biz — responsive site mockup", w: 423, h: 505 },
+  { src: "/playbook-dither.mp4", alt: "Playbook — dithered duotone event teaser", w: 1080, h: 1080, video: true },
+  { src: "/hero-16x9-comp.mp4", alt: "Lauf — hero brand motion composite", w: 1920, h: 1080, video: true },
+  { src: "/wags-mockup.jpg", alt: "Wags — daycare pricing calculator on a tablet", w: 2000, h: 1333 },
+  { src: "/brady-into.mp4", alt: "Brady Digital — brand motion intro", w: 1728, h: 1080, video: true },
+  { src: "/playbook-mockup.jpg", alt: "Playbook — tenant-experience app mockup", w: 2000, h: 3000 },
+  { src: "/lines.png", alt: "Brand values connected by a mapped line system", w: 1192, h: 672 },
+  { src: "/bb-motion-1.mp4", alt: "The Body Biz — brand motion study", w: 1080, h: 1350, video: true },
+  { src: "/bb-mockup-2.jpg", alt: "The Body Biz — coaching site on a laptop", w: 2000, h: 1334 },
+  { src: "/playbook-hat.png", alt: "Playbook — branded merch cap", w: 1984, h: 2128 },
+
+  { src: "/riverside-mockup.jpg", alt: "Riverside — responsive site mockup", w: 2000, h: 3000 },
+  { src: "/stoc-mockup-1.png", alt: "STOC Advisory — responsive site mockup", w: 423, h: 505 },
 ];

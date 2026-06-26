@@ -28,7 +28,7 @@ export function EmbarkBand({
       className="flex w-full flex-col overflow-clip bg-board lg:flex-row"
     >
       {/* Left — editorial copy */}
-      <div className="flex flex-[1.15] flex-col justify-between px-10 pb-16 pt-[72px] lg:px-[72px] lg:pr-14">
+      <div className="flex flex-1 flex-col justify-between px-10 pb-16 pt-[72px] lg:px-[72px] lg:pr-14">
         <div className="flex flex-col">
           <span className="flex items-center gap-2">
             <span className="font-sans text-sm font-medium  text-[#ffe0b2]">
@@ -78,7 +78,7 @@ export function EmbarkBand({
       </div>
 
       {/* Right — client testimonial carousel (QuoteSpotlight styling) */}
-      <div className="relative flex flex-[0.85] flex-col justify-center border-t border-white/[0.08] bg-gradient-to-b from-white/[0.035] to-transparent px-10 py-16 lg:min-h-[560px] lg:border-l lg:border-t-0 lg:px-[72px]">
+      <div className="relative flex flex-1 flex-col justify-center border-t border-white/[0.08] bg-gradient-to-b from-white/[0.035] to-transparent px-10 py-16 lg:min-h-[560px] lg:border-l lg:border-t-0 lg:px-[72px]">
         {testimonials.length > 0 && (
           <TestimonialCarousel items={testimonials} />
         )}

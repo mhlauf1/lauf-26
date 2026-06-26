@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { CadenceCover } from "@/components/sections/CadenceCover";
+import { InViewVideo } from "@/components/primitives/InViewVideo";
 import { StarMark } from "@/components/primitives/StarMark";
 import { projects, type Project } from "@/lib/work";
 import { StarDivider } from "../primitives/StarDivider";
@@ -13,7 +15,7 @@ import { StarDivider } from "../primitives/StarDivider";
  * — the only place color enters the chrome — because color lives in the work.
  */
 export function WorkGrid({
-  items = projects.slice(0, 4),
+  items = projects.slice(0, 6),
   eyebrow = "Selected work",
   heading = "A few brands we’ve built lately.",
   /** show the "All projects →" link in the head (hidden on the /work index) */
@@ -64,7 +66,30 @@ export function WorkGrid({
   );
 }
 
+/**
+ * Local cover art used only on the homepage work grid — independent of each
+ * project's canonical `image` (which still drives the case page, tabbed
+ * viewer, etc.). Cadence is handled separately below (tagline over bg).
+ */
+const GRID_COVER: Record<string, string> = {
+  embark: "/embark-bg.png",
+  "the-body-biz": "/bb-mockup-2.jpg",
+  playbook: "/playbook-mock.jpg",
+  "stoc-advisory": "/stoc-cover.png",
+};
+
+/** Slugs whose homepage cover is a muted autoplay/loop video instead of a still. */
+const GRID_VIDEO: Record<string, string> = {
+  "brady-digital": "/brady-into.mp4",
+  embark: "/embark-spiral.mp4",
+};
+
 export function WorkCard({ project }: { project: Project }) {
+  const isCadence = project.slug === "cadence";
+  const isStoc = project.slug === "stoc-advisory";
+  const isPlaybook = project.slug === "playbook";
+  const video = GRID_VIDEO[project.slug];
+  const cover = GRID_COVER[project.slug] ?? project.image;
   return (
     <li className="flex flex-col gap-5">
       <a
@@ -73,32 +98,112 @@ export function WorkCard({ project }: { project: Project }) {
       >
         {/* Cover */}
         <div
-          className="relative flex h-[400px] w-full items-center justify-center overflow-hidden rounded-xl bg-cream"
+          className="relative flex h-[480px] w-full items-center justify-center overflow-hidden bg-cream"
           style={
-            project.image ? undefined : { backgroundColor: project.accent }
+            video || cover || isCadence
+              ? undefined
+              : { backgroundColor: project.accent }
           }
         >
-          {project.image ? (
+          {isStoc ? (
             <>
               <Image
-                src={project.image}
+                src="/stoc-cover.png"
+                alt=""
+                aria-hidden
+                fill
+                sizes="(max-width: 768px) 100vw, 668px"
+                className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+              />
+              <Image
+                src="/stoc-hero-1.png"
+                alt={`${project.name} — ${project.blurb}`}
+                width={1200}
+                height={600}
+                sizes="(max-width: 768px) 68vw, 450px"
+                className="relative z-10 w-[84%] rounded-md shadow-2xl ring-1 ring-black/10 transition-transform duration-500 motion-safe:group-hover:scale-[1.03] md:w-[68%]"
+              />
+              <span className="absolute left-[22px] top-5 z-20 font-sans text-xs font-semibold tracking-[0.-12em] bg-white/20 px-2 py-1 rounded-full text-white">
+                {project.vertical}
+              </span>
+            </>
+          ) : isPlaybook ? (
+            <>
+              <Image
+                src="/playbook-mock.jpg"
+                alt=""
+                aria-hidden
+                fill
+                sizes="(max-width: 768px) 100vw, 668px"
+                className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+              />
+              <InViewVideo
+                src="/playbook-video.mp4"
+                ariaLabel={`${project.name} — ${project.blurb}`}
+                className="relative z-10 w-[84%] rounded-md shadow-2xl ring-1 ring-black/10 transition-transform duration-500 motion-safe:group-hover:scale-[1.03] md:w-[68%]"
+              />
+              <span className="absolute left-[22px] top-5 z-20 font-sans text-xs font-semibold tracking-[0.-12em] bg-white/20 px-2 py-1 rounded-full text-white">
+                {project.vertical}
+              </span>
+            </>
+          ) : video ? (
+            <>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                aria-label={`${project.name} — ${project.blurb}`}
+                className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03] ${
+                  project.slug === "brady-digital"
+                    ? "object-[57%_center] md:object-center"
+                    : ""
+                }`}
+              >
+                <source src={video} type="video/mp4" />
+              </video>
+              <span className="absolute left-[22px] top-5 z-10 font-sans text-xs font-semibold tracking-[0.-12em] bg-white/20 px-2 py-1 rounded-full text-white">
+                {project.vertical}
+              </span>
+            </>
+          ) : cover ? (
+            <>
+              <Image
+                src={cover}
                 alt={`${project.name} — ${project.blurb}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 668px"
                 className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
               />
-              <span className="absolute left-[22px] top-5 z-10 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-white">
+              <span className="absolute left-[22px] top-5 z-10 font-sans text-xs font-semibold tracking-[0.-12em] bg-white/20 px-2 py-1 rounded-full text-white">
                 {project.vertical}
               </span>
             </>
           ) : (
             <>
-              <span className="absolute left-[22px] top-5 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-white/85">
+              {isCadence && <CadenceCover />}
+              <span className="absolute left-[22px] top-5 z-10 font-sans text-xs  font-semibold tracking-[0.-12em] bg-white/20 px-2 py-1 rounded-full text-white">
                 {project.vertical}
               </span>
-              <p className="max-w-[80%] text-center font-italic text-[clamp(34px,3.4vw,46px)] font-normal italic leading-[1.2] text-white">
-                {project.tagline}
-              </p>
+              {isCadence ? (
+                <div className="relative z-10 flex flex-col items-center gap-7">
+                  <Image
+                    src="/cadence-hero.jpg"
+                    alt="Cadence Private Capital"
+                    width={650}
+                    height={460}
+                    sizes="200px"
+                    className="h-auto w-[104px] [filter:brightness(0)_invert(1)]"
+                  />
+                  <p className="whitespace-nowrap text-center font-sans text-[clamp(22px,5.6vw,46px)] font-medium leading-[1.1] tracking-tighter text-white">
+                    {project.tagline}
+                  </p>
+                </div>
+              ) : (
+                <p className="max-w-[80%] text-center font-italic text-[clamp(34px,3.4vw,46px)] font-normal italic leading-[1.2] text-white">
+                  {project.tagline}
+                </p>
+              )}
             </>
           )}
         </div>
