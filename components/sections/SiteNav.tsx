@@ -50,7 +50,7 @@ export function SiteNav() {
   }, [open]);
 
   return (
-    <nav className="relative z-50 flex items-center justify-between px-5 pt-6 sm:px-10 sm:pt-7">
+    <nav className="relative z-50 flex items-center justify-between px-5 pt-3 sm:px-10 sm:pt-5">
       <Link
         href="/"
         aria-label="Lauf — home"
@@ -150,7 +150,9 @@ export function SiteNav() {
               >
                 <span
                   className={`font-garamond text-[clamp(40px,13vw,64px)] font-thin leading-[0.95] tracking-[-0.04em] transition-colors ${
-                    active === link.key ? "text-rust" : "text-ink group-hover:text-rust"
+                    active === link.key
+                      ? "text-rust"
+                      : "text-ink group-hover:text-rust"
                   }`}
                 >
                   {link.label}

@@ -3,7 +3,15 @@ import { Fraunces, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import SmoothScroll from "@/components/SmoothScroll";
 import { SiteNav } from "@/components/sections/SiteNav";
+import { AnimationProvider } from "@/components/anim/AnimationProvider";
+import { AnimToggler } from "@/components/anim/AnimToggler";
 import "./globals.css";
+
+// Sets the active animation theme on <html> before first paint so reveals
+// don't flash visible-then-hidden during hydration. Mirrors the logic in
+// AnimationProvider; reduced-motion wins. Without JS, no theme is set and all
+// content stays fully visible.
+const ANIM_BOOT = `(function(){try{var t=localStorage.getItem("lauf-anim-2");var ok=["sleek","crisp","mask","off"].indexOf(t)>-1;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){t="off"}else if(!ok){t="crisp"}document.documentElement.dataset.anim=t}catch(e){document.documentElement.dataset.anim="crisp"}})();`;
 
 // Display sans — General Sans (Fontshare, ITF Free Font License, self-hosted).
 // The hero headline's sans bookend lines — set Regular (400), not bold.
@@ -63,11 +71,17 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${plex.variable} ${generalSans.variable} ${displaySerif.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: ANIM_BOOT }} />
+      </head>
       <body>
-        <SmoothScroll>
-          <SiteNav />
-          {children}
-        </SmoothScroll>
+        <AnimationProvider>
+          <SmoothScroll>
+            <SiteNav />
+            {children}
+          </SmoothScroll>
+          <AnimToggler />
+        </AnimationProvider>
       </body>
     </html>
   );

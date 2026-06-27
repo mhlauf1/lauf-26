@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { StarMark } from "@/components/primitives/StarMark";
+import { RevealLines } from "@/components/anim/RevealLines";
 
 /**
  * "Brand ready" — a two-column value-prop band that sits under the work reel.
@@ -33,33 +34,35 @@ export function BrandReady() {
 
         {/* Type sandwich — mirrors the hero: General Sans bookends wrap a
             Cormorant Garamond serif core that carries the italic phrase. */}
-        <h2 className="mt-5 flex max-w-[600px] flex-col text-ink">
-          {/* sans */}
-          <span
-            className="font-general font-normal leading-[1.1] tracking-[-0.04em]"
-            style={{ fontSize: "clamp(34px, 3.6vw, 50px)" }}
-          >
-            Designed and built
-          </span>
-          {/* serif core + italic phrase */}
-          <span
-            className="font-garamond font-thin leading-[.95] tracking-[-0.06em]"
-            style={{ fontSize: "clamp(40px, 4.2vw, 58px)" }}
-          >
-            in <span className="italic">two weeks</span> —
-          </span>
-          {/* sans */}
-          <span
-            className="font-general font-normal leading-[1.2] tracking-[-0.04em]"
-            style={{ fontSize: "clamp(34px, 3.6vw, 50px)" }}
-          >
-            or continuously shipped.
-          </span>
-        </h2>
+        <RevealLines
+          as="h2"
+          className="mt-5 flex max-w-[600px] flex-col text-ink"
+          lines={[
+            {
+              content: "Designed and built",
+              className: "font-general font-normal leading-[1.1] tracking-[-0.04em]",
+              style: { fontSize: "clamp(34px, 3.6vw, 50px)" },
+            },
+            {
+              content: (
+                <>
+                  in <span className="italic">two weeks</span>
+                </>
+              ),
+              className: "font-garamond font-thin leading-[.95] tracking-[-0.06em]",
+              style: { fontSize: "clamp(40px, 4.2vw, 58px)" },
+            },
+            {
+              content: "or continuously shipped.",
+              className: "font-general font-normal leading-[1.2] tracking-[-0.04em]",
+              style: { fontSize: "clamp(34px, 3.6vw, 50px)" },
+            },
+          ]}
+        />
 
         <p className="mt-6 max-w-[460px] font-sans text-[17px] leading-[27px] text-muted">
           For founders and teams who want a site that's designed and engineered
-          by the same hands — credible, fast, and built to last, with none of the
+          by the same hands, credible, fast, and built to last, with none of the
           agency handoff or overhead.
         </p>
 
@@ -84,9 +87,12 @@ export function BrandReady() {
 
         <Link
           href="/contact"
-          className="mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-ink px-7 py-3.5 font-sans text-sm font-medium text-paper transition-colors hover:bg-rust"
+          className="group mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-ink px-7 py-3.5 font-sans text-sm font-medium text-paper transition-colors hover:bg-rust"
         >
-          Process + pricing <span aria-hidden>→</span>
+          Process + pricing{" "}
+          <span aria-hidden className="hover-arrow">
+            →
+          </span>
         </Link>
       </div>
 

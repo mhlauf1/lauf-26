@@ -21,11 +21,11 @@ export default function Home() {
         <WorkReel />
       </div>
 
-      <section className="px-10 mt-12">
+      <section className="px-6 md:px-10 mt-4 md:mt-12">
         <WorkGrid />
       </section>
 
-      <section className="px-10 mt-28">
+      <section className="px-6 md:px-10 mt-28">
         <BrandReady />
       </section>
       <div className="mt-28">

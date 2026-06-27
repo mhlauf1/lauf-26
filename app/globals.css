@@ -71,3 +71,201 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* ── Micro-animation themes ──────────────────────────────────────────
+   One global switch (`html[data-anim="…"]`, set by AnimationProvider)
+   swaps every reveal + hover between distinct feels. Entrance state is
+   driven by `data-inview` (flipped by useInView). All animated props are
+   GPU-friendly: opacity / transform / filter only.
+
+   No active theme on <html> (no-JS / pre-hydration) → everything is fully
+   visible. Reveals only hide once a theme is applied.                    */
+
+/* Reveal primitives are inert until a theme opts them in. */
+.reveal,
+.reveal-line__inner {
+  will-change: opacity, transform, filter;
+}
+
+/* Stagger: each item carries a `--reveal-delay`; themes scale it via
+   `--reveal-scale` so the same markup feels generous or tight per theme. */
+.reveal,
+.reveal-line__inner {
+  transition-delay: calc(var(--reveal-delay, 0ms) * var(--reveal-scale, 1));
+}
+
+/* Masking wrapper for line reveals. Padding/negative-margin pair keeps
+   descenders (g, y, p) from being clipped by overflow in the mask theme. */
+.reveal-line {
+  display: block;
+}
+
+/* ── sleek — crisp × mask blend (default) ────────────────────────────
+   Headlines slide up from behind a mask with snappy, smooth easing;
+   everything else gets crisp's short fade + rise. The mask wrapper carries
+   generous bottom room so descenders / italic tails are never clipped.    */
+html[data-anim="sleek"] {
+  --reveal-scale: 0.6;
+}
+/* headline lines — masked slide-up, fast but smooth.
+   Net-zero padding/margin (equal on every side) extends the clip box outward
+   into the margins WITHOUT shifting layout, so descenders and italic tails
+   are never clipped. The 140% hidden offset guarantees a full hide even at
+   sub-1 line-heights (e.g. the hero's leading-[.9]). */
+html[data-anim="sleek"] .reveal-line {
+  overflow: hidden;
+  /* extra bottom room for long serif descenders (g, p, y); net-zero per side
+     so layout never shifts. Deeper hidden offset (below) clears it. */
+  padding: 0.12em 0.06em 0.4em;
+  margin: -0.12em -0.06em -0.4em;
+}
+html[data-anim="sleek"] .reveal-line__inner {
+  display: inline-block;
+  transform: translateY(150%);
+  transition-property: transform;
+  transition-duration: 0.62s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html[data-anim="sleek"] .reveal-lines[data-inview="true"] .reveal-line__inner {
+  transform: translateY(0);
+}
+/* non-headline elements — crisp short rise */
+html[data-anim="sleek"] .reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition-property: opacity, transform;
+  transition-duration: 0.45s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html[data-anim="sleek"] .reveal[data-inview="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── mask — headline lines slide up from behind a mask ───────────────── */
+html[data-anim="mask"] {
+  --reveal-scale: 1.1;
+}
+html[data-anim="mask"] .reveal-line {
+  overflow: hidden;
+  padding: 0.12em 0.06em 0.4em;
+  margin: -0.12em -0.06em -0.4em;
+}
+html[data-anim="mask"] .reveal-line__inner {
+  display: inline-block;
+  transform: translateY(150%);
+  transition-property: transform;
+  transition-duration: 0.85s;
+  transition-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+}
+html[data-anim="mask"] .reveal-lines[data-inview="true"] .reveal-line__inner {
+  transform: translateY(0);
+}
+/* Non-headline elements still get a clean fade + rise so the theme is felt. */
+html[data-anim="mask"] .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition-property: opacity, transform;
+  transition-duration: 0.75s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+html[data-anim="mask"] .reveal[data-inview="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── crisp — short rise, fast tight ease, minimal stagger ────────────── */
+html[data-anim="crisp"] {
+  --reveal-scale: 0.45;
+}
+html[data-anim="crisp"] .reveal,
+html[data-anim="crisp"] .reveal-line__inner {
+  opacity: 0;
+  transform: translateY(8px);
+  transition-property: opacity, transform;
+  transition-duration: 0.42s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html[data-anim="crisp"] .reveal-line__inner {
+  display: inline-block;
+}
+html[data-anim="crisp"] .reveal[data-inview="true"],
+html[data-anim="crisp"] .reveal-lines[data-inview="true"] .reveal-line__inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Per-theme hover micro-interactions ──────────────────────────────
+   Layer on top of existing group-hover utilities in the markup. The card
+   lifts and its media settles at a theme-specific pace; the link arrow
+   nudge distance/speed varies too.                                       */
+.hover-card {
+  transition-property: transform;
+  transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-card__media {
+  transition-property: transform, filter;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-arrow {
+  transition-property: transform;
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* sleek — snappy lift + a touch of media brightness, longer arrow travel */
+html[data-anim="sleek"] .hover-card,
+html[data-anim="sleek"] .hover-card__media,
+html[data-anim="sleek"] .hover-arrow {
+  transition-duration: 0.28s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html[data-anim="sleek"] .hover-card:hover .hover-card__media {
+  filter: brightness(1.04);
+}
+html[data-anim="sleek"] .group:hover .hover-arrow {
+  transform: translateX(5px);
+}
+
+/* mask — longer arrow travel */
+html[data-anim="mask"] .group:hover .hover-arrow {
+  transform: translateX(6px);
+}
+
+/* crisp — snappy, larger lift, fast */
+html[data-anim="crisp"] .hover-card,
+html[data-anim="crisp"] .hover-card__media,
+html[data-anim="crisp"] .hover-arrow {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html[data-anim="crisp"] .group:hover .hover-arrow {
+  transform: translateX(4px);
+}
+
+/* ── off / reduced-motion — neutral, everything visible immediately ──── */
+html[data-anim="off"] .reveal,
+html[data-anim="off"] .reveal-line__inner,
+html[data-anim="off"] .hover-card,
+html[data-anim="off"] .hover-card__media,
+html[data-anim="off"] .hover-arrow {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-line__inner,
+  .hover-card,
+  .hover-card__media,
+  .hover-arrow {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

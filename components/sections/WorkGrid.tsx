@@ -4,6 +4,8 @@ import { InViewVideo } from "@/components/primitives/InViewVideo";
 import { StarMark } from "@/components/primitives/StarMark";
 import { projects, type Project } from "@/lib/work";
 import { StarDivider } from "../primitives/StarDivider";
+import { Reveal } from "@/components/anim/Reveal";
+import { RevealLines } from "@/components/anim/RevealLines";
 
 /**
  * "Selected work" — the homepage case grid. A two-column grid of project
@@ -30,36 +32,28 @@ export function WorkGrid({
   flush?: boolean;
 }) {
   return (
-    <section className={`flex w-full flex-col ${flush ? "" : "pt-[74px]"}`}>
+    <section className={`flex w-full flex-col ${flush ? "" : "pt-[36px]"}`}>
       {/* Section head */}
-      <div className="flex items-end justify-between ">
-        <div className="flex flex-col gap-3.5">
-          <span className="flex items-center gap-2">
-            <StarMark className="text-sm" />
-            <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-faint">
-              {eyebrow}
-            </span>
-          </span>
-          <h2 className="font-serif text-[clamp(38px,4.4vw,52px)] font-light leading-[1.05] tracking-[-0.05em] text-ink">
-            {heading}
-          </h2>
-        </div>
-
-        {showAllLink && (
-          <a
-            href="/work"
-            className="shrink-0 pb-2 font-sans text-sm font-medium text-ink transition-colors hover:text-rust"
-          >
-            All projects <span aria-hidden>&rarr;</span>
-          </a>
-        )}
-      </div>
-      <div className="mt-7">
+      <div className="mb-8">
         <StarDivider />
       </div>
+      <div className="flex flex-col md:flex-row md:items-end justify-between ">
+        <div className="flex flex-col gap-3.5">
+          <p className="flex items-center gap-2.5 font-sans text-[15px] font-normal text-muted">
+            <StarMark className="text-sm text-rust" />
+            {eyebrow}
+          </p>
+          <RevealLines
+            as="h2"
+            className="font-serif text-[clamp(38px,4.4vw,52px)] font-light leading-[1.05] tracking-[-0.05em] text-ink"
+            lines={[heading]}
+          />
+        </div>
+      </div>
+
       <ul className="mt-12 grid list-none grid-cols-1 gap-x-6 gap-y-14 p-0 md:grid-cols-2">
-        {items.map((project) => (
-          <WorkCard key={project.slug} project={project} />
+        {items.map((project, i) => (
+          <WorkCard key={project.slug} project={project} index={i} />
         ))}
       </ul>
     </section>
@@ -84,21 +78,27 @@ const GRID_VIDEO: Record<string, string> = {
   embark: "/embark-spiral.mp4",
 };
 
-export function WorkCard({ project }: { project: Project }) {
+export function WorkCard({
+  project,
+  index = 0,
+}: {
+  project: Project;
+  index?: number;
+}) {
   const isCadence = project.slug === "cadence";
   const isStoc = project.slug === "stoc-advisory";
   const isPlaybook = project.slug === "playbook";
   const video = GRID_VIDEO[project.slug];
   const cover = GRID_COVER[project.slug] ?? project.image;
   return (
-    <li className="flex flex-col gap-5">
+    <Reveal as="li" index={index} className="flex flex-col gap-5">
       <a
         href={`/work/${project.slug}`}
-        className="group flex flex-col gap-5 no-underline"
+        className="group hover-card flex flex-col gap-5 no-underline"
       >
         {/* Cover */}
         <div
-          className="relative flex h-[480px] w-full items-center justify-center overflow-hidden bg-cream"
+          className="hover-card__media relative flex h-[480px] w-full items-center justify-center overflow-hidden bg-cream"
           style={
             video || cover || isCadence
               ? undefined
@@ -209,20 +209,20 @@ export function WorkCard({ project }: { project: Project }) {
         </div>
 
         {/* Footer row */}
-        <div className="flex w-full items-start justify-between gap-6">
-          <div className="flex flex-col gap-1.5">
-            <h3 className="font-serif text-[26px] font-light leading-8 tracking-[-0.03em] text-ink transition-colors group-hover:text-rust">
+        <div className="flex w-full flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-6">
+          <div className="order-2 flex flex-col gap-1.5 md:order-none">
+            <h3 className="font-serif text-[26px] font-light leading-8 tracking-[-0.03em] text-ink">
               {project.name}
             </h3>
             <p className="font-sans text-[15px] font-normal leading-[18px] text-muted">
               {project.blurb}
             </p>
           </div>
-          <span className="shrink-0 pt-1.5 font-sans text-[13px] font-medium leading-4 text-faint">
+          <span className="order-1 font-sans text-[13px] font-medium leading-4 text-faint md:order-none md:shrink-0 md:pt-1.5">
             {project.services}
           </span>
         </div>
       </a>
-    </li>
+    </Reveal>
   );
 }

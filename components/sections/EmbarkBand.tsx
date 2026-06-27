@@ -1,6 +1,7 @@
 import { StarMark } from "@/components/primitives/StarMark";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { bySlug, type Project } from "@/lib/work";
+import { RevealLines } from "@/components/anim/RevealLines";
 
 type Stat = { value: string; label: string };
 
@@ -28,7 +29,7 @@ export function EmbarkBand({
       className="flex w-full flex-col overflow-clip bg-board lg:flex-row"
     >
       {/* Left — editorial copy */}
-      <div className="flex flex-1 flex-col justify-between px-10 pb-16 pt-[72px] lg:px-[72px] lg:pr-14">
+      <div className="flex flex-1 flex-col justify-between px-6 md:px-10 pb-16 pt-[72px] lg:px-[72px] lg:pr-14">
         <div className="flex flex-col">
           <span className="flex items-center gap-2">
             <span className="font-sans text-sm font-medium  text-[#ffe0b2]">
@@ -37,14 +38,13 @@ export function EmbarkBand({
             </span>
           </span>
 
-          <h2
+          <RevealLines
+            as="h2"
             id="embark-band-heading"
             className="mt-[26px] flex flex-col font-serif font-light leading-[1.04] tracking-[-0.02em] text-[#f7f3ea]"
             style={{ fontSize: "clamp(46px, 5vw, 72px)" }}
-          >
-            <span>Seven+ brands.</span>
-            <span>One platform.</span>
-          </h2>
+            lines={["Seven+ brands.", "One platform."]}
+          />
 
           <p className="mt-7 max-w-[480px] font-sans text-[17px] leading-[27px] text-[#b7ae9f]">
             A pet-services roll-up that acquired faster than its websites could
@@ -70,9 +70,12 @@ export function EmbarkBand({
 
           <a
             href={`/work/${project.slug}`}
-            className="flex shrink-0 items-center gap-2 rounded-full border border-[#4a4138] px-[22px] py-3.5 font-sans text-sm font-medium text-[#f7f3ea] transition-colors hover:border-[#6b5f50] hover:bg-white/[0.04]"
+            className="group flex shrink-0 items-center gap-2 rounded-full border border-[#4a4138] px-[22px] py-3.5 font-sans text-sm font-medium text-[#f7f3ea] transition-colors hover:border-[#6b5f50] hover:bg-white/[0.04]"
           >
-            Read the case study <span aria-hidden>→</span>
+            Read the case study{" "}
+            <span aria-hidden className="hover-arrow">
+              →
+            </span>
           </a>
         </div>
       </div>

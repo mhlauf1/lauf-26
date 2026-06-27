@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { reel, type ReelShot } from "@/lib/work";
 
 /**
@@ -16,14 +16,57 @@ import { reel, type ReelShot } from "@/lib/work";
  * for a natural editorial rhythm.
  */
 
-const CARD_H = 460; // px — shared height; width derives from each photo's ratio
+const CARD_H_MOBILE = 280; // px — shared height on small screens
+const CARD_H_DESKTOP = 460; // px — shared height on larger screens; width derives from ratio
 const LOOP_SECONDS = 80; // time to traverse one track (matches the old marquee)
+
+/** A reel video that forces playback and re-plays itself if ever paused. */
+function ReelVideo({ shot }: { shot: ReelShot }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+
+    const play = () => {
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    play();
+    v.addEventListener("pause", play);
+    v.addEventListener("canplay", play);
+    document.addEventListener("visibilitychange", play);
+    return () => {
+      v.removeEventListener("pause", play);
+      v.removeEventListener("canplay", play);
+      document.removeEventListener("visibilitychange", play);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      aria-label={shot.alt}
+      className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    >
+      <source src={shot.src} type="video/mp4" />
+    </video>
+  );
+}
 
 function Track({
   shots,
+  cardH,
   ariaHidden = false,
 }: {
   shots: ReelShot[];
+  cardH: number;
   ariaHidden?: boolean;
 }) {
   return (
@@ -33,24 +76,15 @@ function Track({
       role={ariaHidden ? "presentation" : "list"}
     >
       {shots.map((shot, i) => {
-        const width = Math.round(CARD_H * (shot.w / shot.h));
+        const width = Math.round(cardH * (shot.w / shot.h));
         return (
           <li
             key={`${shot.src}-${i}`}
             className="relative shrink-0 overflow-hidden  bg-cream"
-            style={{ height: CARD_H, width }}
+            style={{ height: cardH, width }}
           >
             {shot.video ? (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label={shot.alt}
-                className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-              >
-                <source src={shot.src} type="video/mp4" />
-              </video>
+              <ReelVideo shot={shot} />
             ) : (
               <Image
                 src={shot.src}
@@ -71,6 +105,15 @@ function Track({
 export function WorkReel({ shots = reel }: { shots?: ReelShot[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const [cardH, setCardH] = useState(CARD_H_DESKTOP);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    const sync = () => setCardH(mq.matches ? CARD_H_DESKTOP : CARD_H_MOBILE);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -166,8 +209,8 @@ export function WorkReel({ shots = reel }: { shots?: ReelShot[] }) {
         style={{ touchAction: "pan-y" }}
       >
         <div ref={innerRef} className="flex w-max">
-          <Track shots={shots} />
-          <Track shots={shots} ariaHidden />
+          <Track shots={shots} cardH={cardH} />
+          <Track shots={shots} cardH={cardH} ariaHidden />
         </div>
       </div>
     </section>
